@@ -36,7 +36,7 @@ pplt.rc['savefig.transparent']=True
 plt.rcParams.update({'hatch.color': '#363636'})
 
 #My modules 
-from plot_maps import *
+from plot_map import *
 from load_le_data import * 
 from func import *
 

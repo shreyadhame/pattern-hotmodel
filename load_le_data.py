@@ -6,6 +6,18 @@ __version__ = "3.6.3"
 __email__ = "shreyadhame@gmail.com"
 
 #============================================================
+## Load modules
+import os
+import sys
+
+import warnings
+warnings.filterwarnings('ignore')
+
+import numpy as np
+import numpy.ma as ma
+import xarray as xr
+
+#============================================================
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('start_yr') #1950
@@ -28,7 +40,7 @@ if __name__ == "__main__":
     obs = obs.sel(time=slice(start_yr,end_yr)).squeeze()
     time = hadsst.time[:-1]
 
-    #Load large ensembles
+    #Load large ensembles (SST)
     path = '/work/mh0033/m300952/CMIP'
 
     access = xr.open_mfdataset(path+'/ACCESS-ESM1-5/tos/*g025.nc',combine='nested',concat_dim='depth').tos  #9 members degC
@@ -79,4 +91,8 @@ if __name__ == "__main__":
 
     nor = xr.open_mfdataset(path+'/NorCPM1/tos/*g025.nc',combine='nested',concat_dim='depth').tos #30 members degC
     nor = nor.sel(time=slice(start_yr,end_yr)).squeeze()
+
+    #Load large ensembles (wind)
+
+    
 

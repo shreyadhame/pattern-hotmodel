@@ -44,8 +44,8 @@ from func import *
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('var') #sst
-    parser.add_argument('reg') #EP | WP | E-W | SO
+    parser.add_argument('var') #sst | windstress
+    parser.add_argument('reg') #EP | WP | E-W | SO | CP
     parser.add_argument('type_sigma') #std | iqr
 
     args = parser.parse_args()

@@ -28,7 +28,7 @@ import proplot as pplt
 #My modules
 from load_le_data import * 
 from func import *
-from plot_maps import *
+from plot_map import *
 
 plt.rcParams.update({'hatch.color': '#363636'})
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     #          color='black', linewidth=1, marker='.',
     #          transform=ccrs.PlateCarree())
             
-            #s Eastern Pacific Ocean
+            #Eastern Pacific Ocean
             axs[i].plot([-110%360, -75%360, -75%360, -110%360, -110%360], [-30, -30, -10, -10, -30],
             color='black', linewidth=1, marker='.',
             transform=ccrs.PlateCarree())
@@ -113,4 +113,4 @@ if __name__ == "__main__":
     cbar.ax.tick_params(labelsize=20)
     cbar.set_label(label='$^\circ$C',size=20)
 
-    # plt.savefig('Fig_trend_WEP_EEP.png', dpi=300, transparent=True, bbox_inches="tight")`
+    plt.savefig('Fig_1a.png', dpi=300, transparent=True, bbox_inches="tight")`

@@ -8,21 +8,20 @@ __email__ = "shreya.dhame@mpimet.mpg.de"
 
 #==============================================================================
 #General modules
-import numpy as np
-import cmocean
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 from cartopy.mpl.geoaxes import GeoAxes
-from mpl_toolkits.axes_grid1 import AxesGrid
 import matplotlib as mpl
-from scipy.interpolate import interp2d
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import AxesGrid
 from matplotlib import gridspec
 import matplotlib.ticker as mticker
 import matplotlib.patches as mpatches
 import matplotlib.colors as mcolors
 from matplotlib.patches import Polygon
+import numpy as np
+from scipy.interpolate import interp2d
 
 #==============================================================================
 class MidpointNormalize(mcolors.Normalize):
