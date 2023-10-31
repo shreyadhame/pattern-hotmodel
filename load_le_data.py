@@ -92,7 +92,43 @@ if __name__ == "__main__":
     nor = xr.open_mfdataset(path+'/NorCPM1/tos/*g025.nc',combine='nested',concat_dim='depth').tos #30 members degC
     nor = nor.sel(time=slice(start_yr,end_yr)).squeeze()
 
-    #Load large ensembles (wind)
+    #Arrange models according to increasing ECS 
+    mods = [gfdl, miroc6, miroc, giss, mpi, nor, canesm2, access, gfdlcm3, csiro, cesm1, ipsl, cnrm, cesm2, canesm5]
+    ecs = [2.44, 2.6 , 2.66, 2.71, 2.8, 3.03, 3.7 , 3.88, 3.95, 4.09, 4.1, 4.7 , 4.9 ,5.15, 5.64]
+    mod_units = ['K', 'C', 'C', 'C', 'K', 'C', 'K', 'K', 'C', 'K', 'K', 'C', 'C', 'C', 'K', 'C']
+    
+    #Convert to array
+    mods = np.array([np.nan_to_num(v) for v in mods])
+    mods_ma = np.copy(mods)
+
+    #convert to degC
+    mod_data = np.copy(mods_ma)
+    for i in range(len(mods_ma)):
+        if mod_units[i] == 'K':
+            mod_data[i] = mods_ma[i] - 273.15
+        elif mod_units == 'C':
+            pass
+
+    #Correct temperatures 
+    mod_data[3][3][-6:] = mod_data[3][3][-6:] - 273.15 
+    mod_data[3][6][-6:] = mod_data[3][6][-6:] - 273.15
+    mod_data[3][9][-6:] = mod_data[3][9][-6:] - 273.15
+    mod_data[3][12][-6:] = mod_data[3][12][-6:] - 273.15
+    
+    #Remove weird values    
+    mod_data[0][np.where(mod_data[0] < -2.)] = 0.
+    mod_data[3][np.where(mod_data[3] < -2.)] = 0.
+    mod_data[6][np.where(mod_data[6] < -2.)] = 0.
+    mod_data[7][np.where(mod_data[7] < -2.)] = 0.
+    mod_data[9][np.where(mod_data[9] < -2.)] = 0.
+    mod_data[10][np.where(mod_data[10] < -2.)] = 0.
+    mod_data[13][np.where(mod_data[13] < -2.)] = 0.
+
+    #Mask zeros 
+    mod_data = [ma.masked_where(v == 0., v) for v in mod_data]
+    
+    del mods
+    gc.collect()
 
     
 
