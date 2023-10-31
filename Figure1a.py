@@ -78,20 +78,20 @@ if __name__ == "__main__":
                             cmap=cmap,
                             ticks=False,land=True,title=titles[i],loc_title='center',pad=5)
             
-    #         #Southern Ocean
-    #         axs[i].plot([0, 360, 360, 0, 0], [-45, -45, -65, -65, -45],
-    #          color='black', linewidth=1, marker='.',
-    #          transform=ccrs.PlateCarree())
-            
-            #Eastern Pacific Ocean
-            axs[i].plot([-110%360, -75%360, -75%360, -110%360, -110%360], [-30, -30, -10, -10, -30],
-            color='black', linewidth=1, marker='.',
-            transform=ccrs.PlateCarree())
-            
+            # #Southern Ocean
+            # axs[i].plot([0, 360, 360, 0, 0], [-45, -45, -65, -65, -45],
+            #  color='black', linewidth=1, marker='.',
+            #  transform=ccrs.PlateCarree())
+    
             #Western Pacific Ocean
-            axs[i].plot([-170%360, -120%360, -120%360, -170%360, -170%360], [-5, -5, 5, 5, -5],
-            color='black', linewidth=1, marker='.',
-            transform=ccrs.PlateCarree())
+            axs[i].plot([110%360, 180%360, 180%360, 110%360, 110%360], [-5, -5, 5, 5, -5],
+             color='black', linewidth=1, marker='.',
+             transform=ccrs.PlateCarree())
+
+            #Eastern Pacific Ocean
+            axs[i].plot([180%360, -80%360, -80%360, 180%360, 180%360], [-5, -5, 5, 5, -5],
+             color='black', linewidth=1, marker='.',
+             transform=ccrs.PlateCarree())
             
     mp=0.
     vmin=levels[0]
