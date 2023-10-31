@@ -92,11 +92,40 @@ def calc_phi(mod,obs,type_sigma='std'):
     return phi,lb,ub
 
 def sel_reg(var,lon,lat,lat1,lat2,lon1,lon2):
+    """
+    Select a region
+    Parameters
+    ----------
+    var : 3-D xarray 
+    lat, lon : 1-D arrays
+    """
     #Revised lon, lat, region
     lats = lat.sel(lat=slice(lat1,lat2))
     lons = lon.sel(lon=slice(lon1,lon2))
     reg = var.sel(lat=slice(lat1,lat2),lon=slice(lon1,lon2))
     return reg,lons,lats
+
+def selreg(var, lon, lat, lon1, lon2, lat1, lat2):
+    """
+    Select a region
+    Parameters
+    ----------
+    var : 3-D numpy array 
+    lat, lon : 1-D arrays
+    """
+    ind_start_lat=int(np.abs(lat-(lat1)).argmin())
+    ind_end_lat=int(np.abs(lat-(lat2)).argmin())+1
+    ind_start_lon=int(np.abs(lon-(lon1)).argmin())
+    ind_end_lon=int(np.abs(lon-(lon2)).argmin())+1
+
+    #lonlat
+    lons = lon[ind_start_lon:ind_end_lon]
+    lats = lat[ind_start_lat:ind_end_lat]
+    if var.ndim == 3:
+        box = var[:,ind_start_lat:ind_end_lat,ind_start_lon:ind_end_lon]
+    elif var.ndim == 4:
+        box = var[:,:,ind_start_lat:ind_end_lat,ind_start_lon:ind_end_lon]
+    return box, lons, lats
 
 def wgt_mean(var,lon,lat):
     """
