@@ -13,33 +13,29 @@ import sys
 import warnings
 warnings.filterwarnings('ignore')
 
+from adjustText import adjust_text
 import argparse
+import klepto
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.ma as ma
-import xarray as xr
 import pandas as pd
 from scipy import stats
+from scipy.stats import iqr
 import seaborn as sns
-import matplotlib.pyplot as plt
-
+from sklearn.linear_model import LinearRegression
 import pymannkendall as mk
 import proplot as pplt
-from adjustText import adjust_text
-import klepto
-from scipy.stats import iqr
-import klepto
-from sklearn.linear_model import LinearRegression
-
-pplt.rc['tick.lenratio']=0.02
-pplt.rc['savefig.transparent']=True
-
-plt.rcParams.update({'hatch.color': '#363636'})
+import xarray as xr
 
 #My modules 
-from plot_map import *
-from load_le_data import * 
 from func import *
+from load_le_data import * 
+from plot_map import *
 
+plt.rcParams.update({'hatch.color': '#363636'})
+pplt.rc['tick.lenratio']=0.02
+pplt.rc['savefig.transparent']=True
 #============================================================
 ### Execute script
 
