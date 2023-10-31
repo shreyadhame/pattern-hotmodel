@@ -29,6 +29,7 @@ import proplot as pplt
 import xarray as xr
 
 #My modules 
+from calc_phi import *
 from func import *
 from load_le_data import * 
 from plot_map import *
@@ -40,60 +41,6 @@ pplt.rc['savefig.transparent']=True
 ### Execute script
 
 if __name__ == "__main__":
-
-    #Eastern Pacific
-    lat1 = 5
-    lat2 = -5
-    lone1 = -180%360
-    lone2 = -80%360
-    #Western Pacific
-    lonw1 = 110
-    lonw2 = 180
-        
-    obs_reg1, lons, lats = selreg(obs,lon,lat,lat1=lat2,lat2=lat1,lon1=lone1,lon2=lone2)
-    mod_reg1 = [selreg(v,lon,lat,lat1=lat2,lat2=lat1,lon1=lone1,lon2=lone2)[0] for v in mod_data]
-    
-    #Take spatial mean
-    obs_ts1 = wgt_mean(obs_reg1,lons,lats)
-    mod_ts1=[]
-    for i in range(len(mod_reg1)):
-        mod_ts1.append([wgt_mean(ma.masked_where(v<-5,v),lons,lats) for v in mod_reg1[i]])
-    
-    obs_reg2, lons, lats = selreg(obs,lon,lat,lat1=lat2,lat2=lat1,lon1=lonw1,lon2=lonw2)
-    mod_reg2 = [selreg(v,lon,lat,lat1=lat2,lat2=lat1,lon1=lonw1,lon2=lonw2)[0] for v in mod_data]
-    mod_reg2[13] = ma.masked_where(mod_reg2[13] < 6., mod_reg2[13])
-    
-    #Take spatial mean
-    obs_ts2 = wgt_mean(obs_reg2,lons,lats) 
-    mod_ts2=[]
-    for i in range(len(mod_reg2)):
-        mod_ts2.append([wgt_mean(ma.masked_where(v<0,v),lons,lats) for v in mod_reg2[i]])
-    
-    ew_obs = obs_ts1 - obs_ts2
-    ew_mods = []
-    for i in range(len(mod_ts2)):
-        ew_mods.append(np.stack([np.array(mod_ts1[i][j] - mod_ts2[i][j]) for j in range(len(mod_ts2[i]))])) 
-
-    #Calculate observed trends for chunks of periods (E-W)
-    start_year = 1950
-    end_year = 2021
-    
-    ew_trends = []
-    for i in range(start_year,end_year):
-        for j in range(start_year,end_year):
-            ind1 = np.where(time.dt.year==i)[0][0] #Index of start year
-            ind2 = np.where(time.dt.year==j)[0][0] #Index of end year
-            chunk = ew_obs[ind1:ind2] #Select a chunk
-            if len(chunk) >= 19: #*12: #Calculate trends only for >20 year chunks
-                ew_trends.append(mk_test(chunk)[-1]*10) #len(chunk)) or 10 for decadal trend
-            else:
-                ew_trends.append(np.nan)
-
-    db = klepto.archives.dir_archive('mphi_sst_E-W',serialized=True,cached=False)
-    mphi = db['mphi'] 
-    mti = b['mti']
-    mlb = db['mlb']
-    mub = db['mub']
 
     #Define model agreement 
     pct = [(100/len(mod_data))*n for n in np.arange(1,len(mod_data)+1)]
