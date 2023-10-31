@@ -13,17 +13,19 @@ import sys
 import warnings
 warnings.filterwarnings('ignore')
 
+from argparse import ArgumentParser
+import gc 
+import klepto
+import pandas as pd
+import proplot as pplt
+import pymannkendall as mk
+import seaborn as sns
+import scipy.signal
+from scipy.stats import iqr, norm
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.ma as ma
 import xarray as xr
-import pandas as pd
-from scipy import stats
-import seaborn as sns
-import matplotlib.pyplot as plt
-from argparse import ArgumentParser
-import scipy.signal
-import pymannkendall as mk
-import proplot as pplt
 
 #My modules
 from load_le_data import * 
@@ -31,7 +33,8 @@ from func import *
 from plot_map import *
 
 plt.rcParams.update({'hatch.color': '#363636'})
-
+pplt.rc['tick.lenratio']=0.02
+pplt.rc['savefig.transparent']=True
 #============================================================
 def func_mkslope(x):
     slope = mk_test(x)[-1]
