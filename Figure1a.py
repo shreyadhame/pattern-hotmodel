@@ -82,25 +82,13 @@ if __name__ == "__main__":
     #         axs[i].plot([0, 360, 360, 0, 0], [-45, -45, -65, -65, -45],
     #          color='black', linewidth=1, marker='.',
     #          transform=ccrs.PlateCarree())
-    #         #Western Pacific Ocean
-    #         axs[i].plot([110%360, 180%360, 180%360, 110%360, 110%360], [-5, -5, 5, 5, -5],
-    #          color='black', linewidth=1, marker='.',
-    #          transform=ccrs.PlateCarree())
-    # #         #Central Pacific 
-    # #         axs[i].plot([180%360, -150%360, -150%360, 180%360, 180%360], [-5, -5, 5, 5, -5],
-    # #          color='#0075C5', linewidth=1, marker='.',linestyle='--',
-    # #          transform=ccrs.PlateCarree())
-    #         #Eastern Pacific Ocean
-    #         axs[i].plot([180%360, -80%360, -80%360, 180%360, 180%360], [-5, -5, 5, 5, -5],
-    #          color='black', linewidth=1, marker='.',
-    #          transform=ccrs.PlateCarree())
             
             #Eastern Pacific Ocean
             axs[i].plot([-110%360, -75%360, -75%360, -110%360, -110%360], [-30, -30, -10, -10, -30],
             color='black', linewidth=1, marker='.',
             transform=ccrs.PlateCarree())
             
-            #Eastern Pacific Ocean
+            #Western Pacific Ocean
             axs[i].plot([-170%360, -120%360, -120%360, -170%360, -170%360], [-5, -5, 5, 5, -5],
             color='black', linewidth=1, marker='.',
             transform=ccrs.PlateCarree())
