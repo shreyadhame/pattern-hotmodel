@@ -14,19 +14,18 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from argparse import ArgumentParser
-import numpy as np
-import numpy.ma as ma
-import xarray as xr
-import pandas as pd
-from scipy import stats
-import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.lines import Line2D
-
-import scipy.signal
+import numpy as np
+import numpy.ma as ma
+import pandas as pd
 import pymannkendall as mk
 import proplot as pplt
+import seaborn as sns
+import scipy.signal
+from scipy import stats
+import xarray as xr
 
 #My modules
 from load_le_data import * 
