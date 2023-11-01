@@ -83,20 +83,20 @@ if __name__ == "__main__":
             #  color='black', linewidth=1, marker='.',
             #  transform=ccrs.PlateCarree())
     
-            #Western Pacific Ocean
+            #Western Pacific Ocean box
             axs[i].plot([110%360, 180%360, 180%360, 110%360, 110%360], [-5, -5, 5, 5, -5],
              color='black', linewidth=1, marker='.',
              transform=ccrs.PlateCarree())
 
-            #Eastern Pacific Ocean
+            #Eastern Pacific Ocean box
             axs[i].plot([180%360, -80%360, -80%360, 180%360, 180%360], [-5, -5, 5, 5, -5],
              color='black', linewidth=1, marker='.',
              transform=ccrs.PlateCarree())
-            
+
+    #colorbar
     mp=0.
     vmin=levels[0]
     vmax=np.round(levels[-1],2)
-        
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
     cbar = mpl.colorbar.ColorbarBase(ax_cb, cmap=cmap, norm=norm, orientation='horizontal',\
