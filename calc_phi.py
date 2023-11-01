@@ -251,7 +251,42 @@ if __name__ == "__main__":
 
     #============================================================
     #Central Pacific wind stress
+    ws_moddata = ws_mods
+    
+    #Central Pacific 
+    lat1 = 5
+    lat2 = -5
+    lon1 = 180
+    lon2 = -150%360
 
+    #Select region
+    ws_obs_reg, lons, lats = sel_reg(ws_obs,lon,lat,lat1=lat2,lat2=lat1,lon1=lon1,lon2=lon2)
+    ws_obs_reg = np.apply_along_axis(stress,0,ws_obs_reg)
+    ws_mod_reg = [sel_reg(v,lon,lat,lat1=lat2,lat2=lat1,lon1=lon1,lon2=lon2)[0] for v in ws_moddata]
+    ws_mod_reg[0] = np.apply_along_axis(stress,0,ws_mod_reg[0])
+    ws_mod_reg[6] = np.apply_along_axis(stress,0,ws_mod_reg[6])
+    #Take spatial mean
+    ws_obs_ts = wgt_mean(ws_obs_reg,lons,lats)
+    ws_mod_ts=[]
+    for i in range(len(ws_mod_reg)):
+        ws_mod_ts.append(np.stack([wgt_mean(v,lons,lats) for v in ws_mod_reg[i]]))
+    ws_obs = ws_obs_ts
+    ws_mods = ws_mod_ts
+
+    #Calculate observed trends for chunks of periods
+    start_year = 1950
+    end_year = 2021
+    
+    ws_trends = []
+    for i in range(start_year,end_year):
+        for j in range(start_year,end_year):
+            ind1 = np.where(time.dt.year==i)[0][0] #Index of start year
+            ind2 = np.where(time.dt.year==j)[0][0] #Index of end year
+            chunk = ws_obs[ind1:ind2] #Select a chunk
+            if len(chunk) >= 19: #*12: #Calculate trends only for >20 year chunks
+                ws_trends.append(mk_test(chunk)[-1]*10) #len(chunk)) or 10 for decadal trend
+            else:
+                ws_trends.append(np.nan) 
     
     #Calculate phi for chunks of periods
     #Create empty array
@@ -281,11 +316,6 @@ if __name__ == "__main__":
     ws_mphi = np.stack(ws_mphi)
     mti = np.stack(mti)
 
-
-
-
-
-
-
-
-
+    #Save to klepto
+    db['ws_trends'] = ws_trends
+    db['ws_mphi'] = ws_mphi
