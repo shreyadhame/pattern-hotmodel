@@ -96,9 +96,7 @@ if __name__ == "__main__":
         if histmax:
             p = p*histmax/max(p)
         z = ax1.plot(x, p, color, linewidth=2)
-    
     normal(x.mean(), x.std(), histmax=ax1.get_ylim()[1])
-    
     
     # sns.kdeplot(x,color='#E66100',ax=ax1,linewidth=2)
     sns.histplot(y,stat='count', kde=False, fill=True, linewidth=0.,alpha=0.3,color='#5D3A9B',ax=ax1,kde_kws={'cut':2})
@@ -109,7 +107,6 @@ if __name__ == "__main__":
         if histmax:
             p = p*histmax/max(p)
         z = ax1.plot(x, p, color, linewidth=2)
-    
     normal(y.mean(), y.std(), histmax=ax1.get_ylim()[1])
     
     # sns.kdeplot(y,color='#5D3A9B',ax=ax1,linewidth=2)
@@ -197,9 +194,7 @@ if __name__ == "__main__":
     # ax2.text(-4.6,2.5,'R$^2$ = '+str(np.round(ew_r[ind],2)))
     ax2.text(-4.2,2.5,'R$^2$ = '+str(np.round(ew_r[ind],2)))
     ax2.text(-4.8,6.2,'1970 - 1995',fontsize=20)
-    
-    
-    
+
     #Positive x-axis plot 
     period = '1990-2015'
     ind = np.where(mti==period)[-1][0]
@@ -285,7 +280,6 @@ if __name__ == "__main__":
         if histmax:
             p = p*histmax/max(p)
         z = ax4.plot(x, p, color, linewidth=2)
-    
     normal(x.mean(), x.std(), histmax=ax4.get_ylim()[1])
     
     
@@ -298,9 +292,7 @@ if __name__ == "__main__":
         if histmax:
             p = p*histmax/max(p)
         z = ax4.plot(x, p, color, linewidth=2)
-    
     normal(y.mean(), y.std(), histmax=ax4.get_ylim()[1])
-    
     
     ax4.axvline(obs_trendr,color='k',linewidth=2)
     ax4.set_xlabel('SST [$^\circ$C decade$^{-1}$]')
