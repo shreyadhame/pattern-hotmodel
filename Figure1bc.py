@@ -42,6 +42,15 @@ pplt.rc['savefig.transparent']=True
 
 if __name__ == "__main__":
 
+    #Extract data from klepto
+    db = klepto.archives.dir_archive('mphi',serialized=True,cached=False)
+    ew_obs = db['ew_obs']
+    ew_mods = db['ew_mods']
+    ew_trends = db['ew_trends']
+    ew_mtrends = db['ew_mtrends']
+    ew_mphi = db['ew_mphi']
+    mti = db['mti']
+    
     #Define model agreement 
     pct = [(100/len(mod_data))*n for n in np.arange(1,len(mod_data)+1)]
     # pct=[0,20,40,60,80,100]
