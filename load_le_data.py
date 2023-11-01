@@ -130,5 +130,65 @@ if __name__ == "__main__":
     del mods
     gc.collect()
 
+    #Load ERA5 data
+    path = '/work/mh0033/m300952/OBS/ERA5/tauu/'
+    ws_obs = xr.open_dataset(path+'era5_tauu_1950-2022_yr_g025.nc').u10
+    lon=ws_obs.lon
+    lat=ws_obs.lat
     
+    ws_obs = ws_obs.sel(time=slice(start_yr,end_yr)).squeeze()
+    time = ws_obs.time
+
+    #Load large ensembles
+    path = '/work/mh0033/m300952/CMIP'
+    
+    ws_access = xr.open_mfdataset(path+'/ACCESS-ESM1-5/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu  #9 members 
+    ws_access = ws_access.sel(time=slice(start_yr,end_yr))
+    
+    ws_canesm2 = xr.open_mfdataset(path+'/CanESM2/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #50 members 
+    ws_canesm2 = ws_canesm2.sel(time=slice(start_yr,end_yr))
+    
+    ws_canesm5 = xr.open_mfdataset(path+'/CanESM5/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #50 members 
+    ws_canesm5 = ws_canesm5.sel(time=slice(start_yr,end_yr))
+    
+    ws_cesm1 = xr.open_mfdataset(path+'/CESM1/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #40 members 
+    ws_cesm1 = ws_cesm1.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_cesm2 = xr.open_mfdataset(path+'/CESM2/tauu/*g025.nc',combine='nested',concat_dim='depth').TAUX #50 members 
+    ws_cesm2 = ws_cesm2.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_cnrm = xr.open_mfdataset(path+'/CNRM-CM6-1/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #10 members 
+    ws_cnrm = ws_cnrm.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_csiro = xr.open_mfdataset(path+'/CSIRO-Mk3-6/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #30 members 
+    ws_csiro = ws_csiro.sel(time=slice(start_yr,end_yr))
+    
+    ws_gfdlcm3 = xr.open_mfdataset(path+'/GFDL-CM3/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #20 members 
+    ws_gfdlcm3 = ws_gfdlcm3.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_gfdl = xr.open_mfdataset(path+'/GFDL-ESM2M/tauu/*g025.nc',combine='nested',concat_dim='depth').uas #30 members 
+    ws_gfdl = ws_gfdl.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_giss = xr.open_mfdataset(path+'/GISS-E2-1-G/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #18 members 
+    ws_giss = ws_giss.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    iws_psl = xr.open_mfdataset(path+'/IPSL-CM6A-LR/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #11 members 
+    ws_ipsl = ws_ipsl.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_miroc6 = xr.open_mfdataset(path+'/MIROC6/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #50 members 
+    ws_miroc6 = ws_miroc6.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_miroc = xr.open_mfdataset(path+'/MIROC-ES2L/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #30 members 
+    ws_miroc = ws_miroc.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    ws_mpi = xr.open_mfdataset(path+'/MPI-ESM/tauu/*g025.nc',combine='nested',concat_dim='depth').uas #100 members 
+    ws_mpi = ws_mpi.sel(time=slice(start_yr,end_yr)).squeeze()
+    # mpi = mpi.transpose("depth","time","lat","lon")
+    
+    ws_nor = xr.open_mfdataset(path+'/NorCPM1/tauu/*g025.nc',combine='nested',concat_dim='depth').tauu #30 members 
+    ws_nor = ws_nor.sel(time=slice(start_yr,end_yr)).squeeze()
+    
+    #All models 
+    ws_mods = [ws_gfdl, ws_miroc6, ws_miroc, ws_giss, ws_cesm1, ws_nor, ws_mpi, ws_canesm2, ws_access, ws_gfdlcm3, ws_csiro, \
+               ws_ipsl, ws_cnrm, ws_cesm2, ws_canesm5]
 
