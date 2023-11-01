@@ -16,15 +16,15 @@ warnings.filterwarnings('ignore')
 from argparse import ArgumentParser
 import gc 
 import klepto
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy.ma as ma
 import pandas as pd
 import proplot as pplt
 import pymannkendall as mk
 import seaborn as sns
 import scipy.signal
 from scipy.stats import iqr, norm
-import matplotlib.pyplot as plt
-import numpy as np
-import numpy.ma as ma
 import xarray as xr
 
 #My modules
