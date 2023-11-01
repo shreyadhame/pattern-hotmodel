@@ -1,0 +1,9 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: Dhame
+  given-names: Shreya
+orcid: https://orcid.org/0000-0002-3586-9721
+title:shreyadhame/pattern-hotmodel: v1.0
+version: v1.0
+date-released: 2023-11-01
