@@ -11,27 +11,14 @@ import os
 import sys
 
 ## My modules
-from load_le_data import *
+from calc_phi import *
 from func import *
+from load_le_data import *
 
 #============================================================
 ### Execute script
 
 if __name__ == "__main__":
-    #Arrange models according to increasing ECS 
-    mods = [gfdl, miroc6, miroc, giss, cesm1, nor, mpi, canesm2, access, gfdlcm3, csiro, ipsl, cnrm, cesm2, canesm5]
-    ecs = [2.44, 2.6 , 2.66, 2.71, 2.94, 3.03, 3.63, 3.7 , 3.88, 3.95, 4.09, 4.7 , 4.9 ,5.15, 5.64]
-    mod_units = ['K', 'C', 'C', 'C', 'C', 'C', 'K', 'K', 'C', 'K', 'K', 'C', 'C', 'K', 'C']
-
-    # mods = np.random.choice(mods,14)
-
-    #convert to degC
-    mod_data = mods
-    for i in range(len(mods)):
-        if mod_units[i] == 'K':
-            mod_data[i] = mods[i] - 273.15
-        elif mod_units == 'C':
-            pass
 
     #Define time
     years=np.unique(time.dt.year)
