@@ -306,7 +306,7 @@ if __name__ == "__main__":
                 chunk_mod = ws_mods[m][:,ind1:ind2]
                 if len(chunk_obs) >= 19: #Calculate trends only for >20 year chunks
                     #Calculate phi
-                    ws_phi.append(calc_phi(chunk_mod,chunk_obs))
+                    ws_phi.append(calc_phi(chunk_mod,chunk_obs,type_sigma=type_sigma)[0])
                     ti.append(str(i)+'-'+str(j))
                 else:
                     ws_phi.append(0.)
