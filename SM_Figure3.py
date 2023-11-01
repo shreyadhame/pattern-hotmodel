@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-__title__ = "Observed trends and phi contour maps for Central Pacific windstress and Southern Ocean SSTa"
+__title__ = "Observed trends and phi contour maps for Central Pacific windstress and Southern Ocean SSTs"
 __author__ = "Shreya Dhame"
 __version__ = "3.6.3"
 __email__ = "shreyadhame@gmail.com"
@@ -13,49 +13,38 @@ import sys
 import warnings
 warnings.filterwarnings('ignore')
 
-import argparse
+from argparse import ArgumentParser
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from matplotlib.lines import Line2D
 import numpy as np
 import numpy.ma as ma
-import xarray as xr
 import pandas as pd
-from scipy import stats
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 import pymannkendall as mk
 import proplot as pplt
-from adjustText import adjust_text
-import klepto
-from scipy.stats import iqr
-import klepto
-from sklearn.linear_model import LinearRegression
+import seaborn as sns
+import scipy.signal
+from scipy import stats
+import xarray as xr
 
-pplt.rc['tick.lenratio']=0.02
-pplt.rc['savefig.transparent']=True
-
-plt.rcParams.update({'hatch.color': '#363636'})
-
-#My modules 
-from plot_map import *
+#My modules
 from load_le_data import * 
 from func import *
+from plot_map import *
 
+plt.rcParams.update({'hatch.color': '#363636'})
+pplt.rc['tick.lenratio']=0.02
+pplt.rc['savefig.transparent']=True
 #============================================================
 ### Execute script
 
 if __name__ == "__main__"from plot_maps import *
     #Load from klepto
-    db = klepto.archives.dir_archive('mphi_ws_CP',serialized=True,cached=False)
-    ws_mphi = db['mphi'] 
-    mti = b['mti']
-    ws_mlb = db['mlb']
-    ws_mub = db['mub']
-
-    db = klepto.archives.dir_archive('mphi_ws_CP',serialized=True,cached=False)
-    so_mphi = db['mphi'] 
-    so_mlb = db['mlb']
-    so_mub = db['mub']
-
+    db = klepto.archives.dir_archive('mphi',serialized=True,cached=False)
+    so_mphi = db['so_mphi'] 
+    ws_mphi = db['ws_mphi'] 
+    mti = db['mti']
+    
     #Model agreement contours 50% - 7/15, 80% - 12/15, 100% - 15/15
     ws_c100 = []
     for l in range(ws_mphi.shape[1]):
@@ -78,27 +67,22 @@ if __name__ == "__main__"from plot_maps import *
         else:
             so_c80.append(0)
 
-    # Create dataframe
+    # Create dataframes
     shape = int(np.sqrt(len(ws_trends)))
     ws_trendsr = np.reshape(ws_trends,(shape,shape)).T #Reshape to 2D matrix and transpose
     ws_dft = pd.DataFrame(ws_trendsr, columns=[str(v) for v in years])
-
     ws_c100r = np.reshape(ws_c100,(shape,shape)).T #Reshape to 2D matrix and transpose
     ws_dc100 = pd.DataFrame(ws_c100r, columns=[str(v) for v in years])
-
     so_trendsr = np.reshape(so_trends,(shape,shape)).T #Reshape to 2D matrix and transpose
     so_dft = pd.DataFrame(so_trendsr, columns=[str(v) for v in years])
-
     so_c50r = np.reshape(so_c50,(shape,shape)).T #Reshape to 2D matrix and transpose
     so_dc50 = pd.DataFrame(so_c50r, columns=[str(v) for v in years])
-
     so_c80r = np.reshape(so_c80,(shape,shape)).T #Reshape to 2D matrix and transpose
     so_dc80 = pd.DataFrame(so_c80r, columns=[str(v) for v in years])
 
     #Change index values to years
     ws_dft = ws_dft.set_index(np.arange(start_year,end_year))
     ws_dc100 = ws_dc100.set_index(np.arange(start_year,end_year))
-
     so_dft = so_dft.set_index(np.arange(start_year,end_year))
     so_dc50 = so_dc50.set_index(np.arange(start_year,end_year))
     so_dc80 = so_dc80.set_index(np.arange(start_year,end_year))
@@ -186,8 +170,6 @@ if __name__ == "__main__"from plot_maps import *
     leg.get_frame().set_linewidth(0.0)
     plt.setp(leg.get_title(),fontsize=14)
 
-
-    ##SO
     # Draw the heatmap with the mask and correct aspect ratio
     vmin = -0.1
     vmax = 0.1
