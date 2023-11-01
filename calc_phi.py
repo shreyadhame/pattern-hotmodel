@@ -188,6 +188,48 @@ if __name__ == "__main__":
     db['ew_intercept'] = ew_intercept 
 
     #============================================================
+    #Calculate trends for chunks of periods (E-W) for all members 
+    start_year = 1950
+    end_year = 2021
+    
+    ew_mtrends_all = [[] for _ in range(len(ew_mods))]
+    for n in range(len(ew_mods)):
+        for i in range(start_year,end_year):
+            for j in range(start_year,end_year):
+                ind1 = np.where(time.dt.year==i)[0][0] #Index of start year
+                ind2 = np.where(time.dt.year==j)[0][0] #Index of end year
+                chunk = ew_mods[n][ind1:ind2] #Select a chunk
+                if len(chunk) >= 19: #*12: #Calculate trends only for >20 year chunks
+                    ew_mtrends_all[n].append(mk_test(chunk)[-1]*10) #len(chunk)) or 10 for decadal trend
+                else:
+                    ew_mtrends_all[n].append(np.nan)
+
+    #Save to klepto
+    db['ew_mtrends_all'] = ew_mtrends_all
+    
+    #============================================================
+    #Calculate modeled trends for chunks of periods (E-W)
+    #Random member - 100 times
+    ew_modsr = np.stack([np.apply_along_axis(np.random.choice,0,v,size=1) for v in ew_mods])
+    ew_modsr = np.reshape(ew_modsr,(1,15,71))
+    
+    ew_mtrendsr = []
+    for r in range(ew_modsr.shape[0]):
+        for k in range(ew_modsr.shape[1]):
+            for i in range(start_year,end_year):
+                for j in range(start_year,end_year):
+                    ind1 = np.where(time.dt.year==i)[0][0] #Index of start year
+                    ind2 = np.where(time.dt.year==j)[0][0] #Index of end year
+                    chunk = ew_modsr[r,k,ind1:ind2] #Select a chunk
+                    if len(chunk) >= 19: #*12: #Calculate trends only for >20 year chunks
+                        ew_mtrendsr.append(mk_test(chunk)[-1]*10) #len(chunk) or 10 for decadal trend
+                    else:
+                        ew_mtrendsr.append(np.nan)
+
+    #Save to klepto
+    db['ew_mtrendsr'] = ew_mtrendsr
+    
+    #============================================================
     #Southern Ocean SSTs
     lat1 = -45
     lat2 = -65
