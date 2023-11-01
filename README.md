@@ -6,5 +6,5 @@ be downloaded at HadISST1: https://www.metoffice.gov.uk/hadobs/hadisst/data/down
 Method:
 ------
 - All datasets were interpolated onto 2.5 x 2.5 global grid using the bilinear interpolation method of Climate Data Operator (CDO)
-- Run calc_phi.py to store calculations to dictionary (klepto)
+- Run calc_phi.py to store calculations of trends for the various time periods (from 1950 until 2021 in observations and models) and their correlation with the Effective Climate Sensitivity (EffCS) to dictionary (klepto)
 - Run individual scripts for figures
