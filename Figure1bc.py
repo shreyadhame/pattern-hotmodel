@@ -30,7 +30,6 @@ import proplot as pplt
 import xarray as xr
 
 #My modules 
-from calc_phi import *
 from func import *
 from load_le_data import * 
 from plot_map import *
