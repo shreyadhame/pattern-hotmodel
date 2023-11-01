@@ -164,6 +164,30 @@ if __name__ == "__main__":
     db['mub'] = mub
 
     #============================================================
+    #Calculate r2 and slope for east-west gradient and EffCS
+    ew_r = []
+    ew_slope = []
+    ew_intercept = []
+    for l in range(ew_mphi.shape[1]): 
+        if np.count_nonzero(ew_mphi[:,l])==0:
+            ew_r.append(np.nan)
+            ew_slope.append(np.nan)
+            ew_intercept.append(np.nan)
+        else:
+            #Calculate R2
+            r_value = stats.linregress(ew_mphi[:,l],ecs)[2]
+            ew_r.append(r_value**2)
+            #Calculate slope
+            ew_slope.append(stats.linregress(ew_mphi[:,l],ecs)[0])
+            #Calculate intercept
+            ew_intercept.append(stats.linregress(ew_mphi[:,l],ecs)[1])
+
+    #Save to klepto
+    db['ew_r'] = ew_r  
+    db['ew_slope'] = ew_slope 
+    db['ew_intercept'] = ew_intercept 
+
+    #============================================================
     #Southern Ocean SSTs
     lat1 = -45
     lat2 = -65
