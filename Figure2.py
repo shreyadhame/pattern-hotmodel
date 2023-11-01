@@ -12,7 +12,6 @@ import sys
 from matplotlib.lines import Line2D
 
 ## My modules
-from calc_phi import *
 from func import *
 from load_le_data import *
 
@@ -24,7 +23,7 @@ if __name__ == "__main__":
     #Define time
     years=np.unique(time.dt.year)
 
-    #Extract data from kleptp
+    #Extract data from klepto
     db = klepto.archives.dir_archive('mphi',serialized=True,cached=False)
     ew_obs = db['ew_obs']
     ew_mods = db['ew_mods']
