@@ -296,7 +296,6 @@ if __name__ == "__main__":
     ax4.axvline(obs_trendr,color='k',linewidth=2)
     ax4.set_xlabel('SST [$^\circ$C decade$^{-1}$]')
     
-    from matplotlib.lines import Line2D
     colors = ['k','#E66100','#5D3A9B']
     # colors = ['k','#40B0A6','#E66100','#5D3A9B']
     title = ['Observations','MIROC6 | \nLow sensitivity model','CanESM5 | Hot model']
